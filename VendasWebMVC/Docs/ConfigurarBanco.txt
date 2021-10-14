@@ -1,0 +1,13 @@
+1 - Mudar a string de conexão para o banco desejado.
+
+2 - Modificar o dbContext na classe Startup.cs
+	Aqui, basta modificar de acordo com o tipo de provider.
+	Ex: Provider MySql services.AddDbContext<SalesWebMVCContext>(options =>
+                    options.UseMySql(
+                        Configuration.GetConnectionString("NomeDBContext"), 
+                        builder => builder.MigrationsAssembly("NomeDoProjeto")
+                        ));
+3 - Baixar o provider do banco desejado.
+	 Ex: Install-Package Pomelo.EntityFrameworkCore.MySql -Version 2.1.1
+
+	

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using VendasWebMVC.Models;
+using VendasWebMVC.Models.ViewModels;
 
 namespace VendasWebMVC.Controllers
 {
@@ -17,7 +18,7 @@ namespace VendasWebMVC.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Projeto de estudos feito com a arquitetura MVC.";
 
             return View();
         }
