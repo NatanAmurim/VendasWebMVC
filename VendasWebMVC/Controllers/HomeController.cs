@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using VendasWebMVC.Models;
-using VendasWebMVC.Models.ViewModels;
+using SalesWebMVC.Models;
+using SalesWebMVC.Models.ViewModels;
 
-namespace VendasWebMVC.Controllers
+namespace SalesWebMVC.Controllers
 {
     public class HomeController : Controller
     {

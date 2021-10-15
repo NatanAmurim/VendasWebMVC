@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Data;
 
-namespace VendasWebMVC
+namespace SalesWebMVC
 {
     public class Startup
     {
