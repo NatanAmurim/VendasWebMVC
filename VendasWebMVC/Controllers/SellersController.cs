@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SalesWebMVC.Models;
 using SalesWebMVC.Services;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace SalesWebMVC.Controllers
     {
         private readonly SellerService _sellerService;
 
-        public SellersController(SellerService sellerService) 
+        public SellersController(SellerService sellerService)
         {
             _sellerService = sellerService;
         }
@@ -19,6 +20,20 @@ namespace SalesWebMVC.Controllers
         {
             var listSeller = _sellerService.FindAll();
             return View(listSeller);
+        }
+
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Seller seller) 
+        {
+            _sellerService.Insert(seller);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
