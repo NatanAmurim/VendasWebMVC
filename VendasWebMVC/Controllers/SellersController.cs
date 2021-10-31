@@ -5,6 +5,7 @@ using SalesWebMVC.Services;
 using SalesWebMVC.Services.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,12 +46,12 @@ namespace SalesWebMVC.Controllers
         public IActionResult Delete(int? id) 
         {
             if (id == null)
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "O identificador do vendedor não pode ser nulo." });
 
             var seller = _sellerService.FindById(id.Value);
 
             if (seller == null)
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Vendedor não localizado." });
 
             return View(seller);
         }
@@ -66,12 +67,12 @@ namespace SalesWebMVC.Controllers
         public IActionResult Details(int? id) 
         {
             if (id == null)
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "O identificador do vendedor não pode ser nulo." });
 
             var seller = _sellerService.FindById(id.Value);
 
             if (seller == null)
-                return NotFound();
+                return RedirectToAction(nameof(Error),new { message = "Vendedor não localizado."});
 
             return View(seller);
         }
@@ -79,12 +80,12 @@ namespace SalesWebMVC.Controllers
         public IActionResult Edit(int? id) 
         {
             if (id == null)
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { Message = "O identificador do vendedor não pode ser nulo." });
 
             var seller = _sellerService.FindById(id.Value);
 
             if (seller == null)
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Vendedor não localizado." });
 
             var departments = _departmentService.FindAll();
             var viewModel = new SellerFormViewModel {Seller = seller, Departments = departments };
@@ -97,23 +98,31 @@ namespace SalesWebMVC.Controllers
         {
             if (id != seller.Id)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = "O identificador do vendedor é diferente do informado na requisição." });
             }
             try
             {
                 _sellerService.Update(seller);
                 return RedirectToAction(nameof(Index));
             }
-            catch (NotFoundException)
+            catch (ApplicationException e)
             {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
 
-                return NotFound();
-            }
-            catch (DbConcurrencyException) 
-            {
-                return BadRequest();
-            }
             
+        }
+
+        public IActionResult Error(string message) 
+        {
+
+            var errorView = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            }; 
+            
+            return View(errorView);
         }
 
     }
