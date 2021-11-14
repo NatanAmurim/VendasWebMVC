@@ -46,7 +46,7 @@ namespace SalesWebMVC.Controllers
                 return View(viewModel);
             }
             
-            await _sellerService.InsertAsync    (seller);
+            await _sellerService.InsertAsync(seller);
             return RedirectToAction(nameof(Index));
         }
 
